@@ -1,7 +1,7 @@
 var pytrain = function() {
 
 	// number of railroad switches
-	var NSWITCHES = 6;
+	var NSWITCHES = 9;
 	
     var svg = document.getElementById("railtrack_baselayout");
 	
@@ -31,9 +31,9 @@ var pytrain = function() {
     			}
     	};
     	
-    	rwswitch.link.onclick= function() {
+    	rwswitch.link.addEventListener("mouseup",function() {
     		rwswitch.toggle();
-    	};
+    	},false);
     	
     	rwswitch.showState();
     	return rwswitch;
