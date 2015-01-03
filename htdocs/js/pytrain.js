@@ -10,6 +10,73 @@ var pytrain = function() {
     
     var switches = [];
     
+    var switchHandler = function(switchState) {
+		
+    	console.log("Received new state:",switchState);
+		    
+    	for (var i=0;i<NSWITCHES;++i) {
+    		switches[i].toggle(switchState[i]);
+    	}
+	}
+    var failHandler = function(err) {
+    	console.error(err);
+    }
+
+    var Deferred = function() {
+    	    	
+    	this.then = function(successHandler,failHandler) {
+    		
+        	this.successHandler = successHandler;
+        	this.failHandler = failHandler;
+
+    	}
+    	
+    	this.resolve = function() {
+    		
+    		this.successHandler && this.successHandler.apply(this,arguments);
+    	}
+
+    	this.reject = function() {
+    		
+    		this.failHandler && this.failHandler.apply(this,arguments);
+    	}
+    };
+    
+    
+    var xhr = function(args) {
+    	
+    	var url = args.url;
+    	var method = args.method || 'GET';
+    	
+    	var d = new Deferred();
+    		
+    	var xmlhttp = new XMLHttpRequest();
+   	
+    	if (args.responseType) {
+    		xmlhttp.responseType = args.responseType;
+    	}
+    	
+    	xmlhttp.onreadystatechange=function() {
+    		if (xmlhttp.readyState==4) {
+    			
+    			if (xmlhttp.status==200) {
+    				d.resolve(xmlhttp.response);
+    			}
+    			else {
+    				d.reject("HTTP query ["+method+" "+url+"] failed with code "+xmlhttp.status);
+    			}
+    		}
+    	};
+    	xmlhttp.open(method,url,true);
+    	if (args.body) {
+    		xmlhttp.send(body);
+    	}
+    	else {
+    		xmlhttp.send();
+    	}
+    	return d;
+    };
+    
     var define_switch = function(lbl) {
 	   
     	var rwswitch = {
@@ -25,15 +92,23 @@ var pytrain = function() {
     				this.node_1.style.display= this.state!=0 ? "inline" : "none";
     			},
     			
-    			toggle: function() {
-    				this.state = this.state!=0 ? 0 : 1;
-    				this.showState();
+    			toggle: function(newState) {
+    				
+    				if (this.state != newState) {
+    					this.state = newState;
+    					this.showState();
+    				}
     			}
     	};
     	
     	rwswitch.link.addEventListener("mouseup",function() {
-    		rwswitch.toggle();
-    	},false);
+    		
+    		xhr({
+    			url:"/toggleSwitch?id="+lbl,
+    			method:"GET",
+    			responseType:"json"
+    		}).then(switchHandler);
+     	},false);
     	
     	rwswitch.showState();
     	return rwswitch;
@@ -46,13 +121,11 @@ var pytrain = function() {
         switches.push(define_switch(lbl));
     }
     
-    
-    
-    
-//	var layer_switch_1_0 = svgDoc.getElementById("layer_switch_1_0");
-//	var layer_switch_2_1 = svgDoc.getElementById("layer_switch_2_1");
 
-//	layer_switch_1_0.style.display="none";
-//	layer_switch_2_1.style.display="none";
-
+    // fetch initial state on startup
+    xhr({
+		url:"/toggleSwitch",
+		method:"GET",
+		responseType:"json"
+	}).then(switchHandler);
 };
