@@ -2,13 +2,13 @@ import os
 from werkzeug.wrappers import Request, Response, Headers
 from werkzeug.wsgi import SharedDataMiddleware
 import json
+from pytrain.backend import Backend
 
-class Shortly(object):
+class PyTrainRequestHandler(object):
 
     def __init__(self, config):
         self.config = config
-        self.switchState = [ 0,0,0,0,0,0,0,0,0 ]
-#        self.redis = redis.Redis(config['redis_host'], config['redis_port'])
+        self.backend = Backend()
 
     def dispatch_request(self, request):
         
@@ -19,11 +19,10 @@ class Shortly(object):
                 swid = request.values['id']
                 if swid and swid.startswith('layer_switch_'):
                     i = int(swid[13:])-1
-                    self.switchState[i] = 1-self.switchState[i]
-                    print("switched number ",i," new state is ",self.switchState)
+                    self.backend.toggleSwitch(i)
                 
             je = json.encoder.JSONEncoder()
-            body = je.encode(self.switchState)
+            body = je.encode(self.backend.switchState)
             return Response(body,content_type="appplication/json")
                 
         
@@ -40,7 +39,7 @@ class Shortly(object):
 
 def create_app(redis_host='localhost', redis_port=6379, with_static=True):
     
-    app = Shortly({
+    app = PyTrainRequestHandler({
         'use_gpio':       False
     })
     if with_static:
@@ -52,4 +51,4 @@ def create_app(redis_host='localhost', redis_port=6379, with_static=True):
 if __name__ == '__main__':
     from werkzeug.serving import run_simple
     app = create_app()
-    run_simple('127.0.0.1', 8000, app, use_debugger=True, use_reloader=False, threaded=True)
+    run_simple('0.0.0.0', 8000, app, use_debugger=True, use_reloader=False, threaded=True)
