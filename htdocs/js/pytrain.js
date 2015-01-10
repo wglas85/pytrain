@@ -60,7 +60,12 @@ var pytrain = function() {
     		if (xmlhttp.readyState==4) {
     			
     			if (xmlhttp.status==200) {
-    				d.resolve(xmlhttp.response);
+                                if (!xmlhttp.responseType && args.responseType == 'json' && typeof xmlhttp.response == 'string') {
+                                    d.resolve(JSON.parse(xmlhttp.response));
+                                }
+                                else {
+    				    d.resolve(xmlhttp.response);
+                                }
     			}
     			else {
     				d.reject("HTTP query ["+method+" "+url+"] failed with code "+xmlhttp.status);
