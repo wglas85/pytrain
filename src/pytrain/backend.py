@@ -8,11 +8,16 @@ try:
     import RPi.GPIO as GPIO
 except ImportError:
     from pytrain.GPIOStub import GPIO
-  
+
+import logging
+ 
+log = logging.getLogger('pytrain.backend')
+   
 class Backend(object):
     '''
     classdocs
     '''
+
     def __init__(self):
         '''
         Constructor
@@ -23,13 +28,13 @@ class Backend(object):
         GPIO.setmode(GPIO.BOARD)
         self.gpioMap = [ 3,5,7,11,13,15,19,21,  10,12,16,18 ]
         for pinid in self.gpioMap:
-            print("Initializing PIN ",pinid)
+            log.info("Initializing PIN {}".format(pinid))
             GPIO.setup(pinid,GPIO.OUT)
             GPIO.output(pinid,0);
         
     def toggleSwitch(self,i):
         pinid = self.gpioMap[i]
         self.switchState[i] = 1-self.switchState[i]
-        print("switched number [",i,"], pinid [",pinid,"] new state is ",self.switchState)
+        log.info("switched number [{}], pinid [{}] new state is {}".format(i,pinid,self.switchState))
         GPIO.output(pinid,self.switchState[i]);
         

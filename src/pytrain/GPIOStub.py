@@ -3,6 +3,9 @@ Created on 06.01.2015
 
 @author: kinders
 '''
+import logging
+ 
+log = logging.getLogger('pytrain.GPIOStub')
 
 class GPIO(object):
     '''
@@ -19,12 +22,12 @@ class GPIO(object):
 
     @staticmethod
     def setmode(mode):
-        print("GPIOStub.setmode(",mode,") called.")
+        log.info("GPIOStub.setmode({}) called.".format(mode))
     
     @staticmethod
     def setup(pinid,direction):
-        print("GPIOStub.setup(",pinid,",",direction,") called.")
+        log.info("GPIOStub.setup({},{}) called.".format(pinid,direction))
         
     @staticmethod
     def output(pinid,state):
-        print("GPIOStub.output(",pinid,",",state,") called.")
+        log.info("GPIOStub.output({},{}) called.".format(pinid,state))
