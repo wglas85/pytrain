@@ -52,10 +52,6 @@ var pytrain = function() {
     		
     	var xmlhttp = new XMLHttpRequest();
    	
-    	if (args.responseType) {
-    		xmlhttp.responseType = args.responseType;
-    	}
-    	
     	xmlhttp.onreadystatechange=function() {
     		if (xmlhttp.readyState==4) {
     			
@@ -79,6 +75,9 @@ var pytrain = function() {
     	else {
     		xmlhttp.send();
     	}
+        if (args.responseType) {
+                xmlhttp.responseType = args.responseType;
+        }
     	return d;
     };
     
