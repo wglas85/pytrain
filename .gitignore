@@ -1,3 +1,9 @@
+# debian pacakgaing temp files.
+common-install-indep
+debian/files
+debian/pytrain.substvars
+debian/pytrain/
+
 # Emacs backups
 *~
 

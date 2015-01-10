@@ -53,11 +53,18 @@ def create_app(redis_host='localhost', redis_port=6379, with_static=True):
 
 if __name__ == '__main__':
 
-    handler = logging.handlers.SysLogHandler(facility=logging.handlers.SysLogHandler.LOG_DAEMON,address='/dev/log')
+    if os.getuid() == 0:
+# daemon-mode logging
+        handler = logging.handlers.SysLogHandler(facility=logging.handlers.SysLogHandler.LOG_DAEMON,address='/dev/log')
 
-    formatter = logging.Formatter('pytrain %(levelname)s %(message)s')
-    handler.setFormatter(formatter)
-
+        formatter = logging.Formatter('pytrain %(levelname)s %(message)s')
+        handler.setFormatter(formatter)
+    else:
+# development-mode logging
+        handler = logging.StreamHandler(open('/dev/stderr', 'w'))
+        formatter = logging.Formatter( '%(asctime)s %(levelname)s %(message)s') 
+        handler.setFormatter(formatter)
+        
     root_logger = logging.getLogger()
     root_logger.addHandler(handler)
     root_logger.setLevel(logging.DEBUG)
