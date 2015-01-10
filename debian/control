@@ -1,0 +1,10 @@
+Source: pytrain
+Priority: extra
+Section: devel
+Maintainer: Wolfgang Glas <wglas85@gmail.com>
+Build-Depends: cdbs, debhelper
+
+Package: pytrain
+Architecture: all
+Depends: python, python-werkzeug
+Description: Python based railway controller.

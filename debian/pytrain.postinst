@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# Start pytrain after installation.
+#
+
+/etc/init.d/pytrain start || echo "Warning: Unable to start pytrain, please inspect manually..."

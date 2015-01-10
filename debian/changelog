@@ -1,0 +1,5 @@
+pytrain (0.1.0-1) all; urgency=medium
+
+  * Initial debianization.
+
+ -- Wolfgang Glas <wglas85@gmail.com>  Wed, 17 Dec 2014 15:36:10 +0100

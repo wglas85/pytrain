@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+#
+# $Id: rules 350 2014-12-08 23:22:01Z osgi $
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+prefix=/usr
+
+package = pytrain
+PYTRAIN_HOME=/usr/share/$(package)
+
+DEB_SHLIBDEPS_INCLUDE :=
+
+DEB_DH_ALWAYS_EXCLUDE := .git
+
+clean::
+	rm -f common-install-indep
+	rm -rf *~ debian/$(package) debian/*~ debian/files* debian/substvars 
+
+#
+# info pages, locale data and static libraries may conflict with
+# already installed binutils packages.
+#
+
+common-install-indep::
+	rm -rf debian/$(package)
+	mkdir -p debian/$(package)$(PYTRAIN_HOME)
+	mkdir -p debian/$(package)/etc/init.d
+	install -m 755 etc/init.d/pytrain debian/$(package)/etc/init.d/pytrain
+	cp -pr src debian/$(package)$(PYTRAIN_HOME)
+	cp -pr htdocs debian/$(package)$(PYTRAIN_HOME)
+	touch common-install-indep
