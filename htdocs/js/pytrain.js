@@ -1,7 +1,7 @@
 var pytrain = function() {
 
 	// number of railroad switches
-	var NSWITCHES = 9;
+	var NSWITCHES = 10;
 	
     var svg = document.getElementById("railtrack_baselayout");
 	
@@ -105,15 +105,17 @@ var pytrain = function() {
     			}
     	};
     	
-    	rwswitch.link.addEventListener("mouseup",function() {
+        if (rwswitch.link) {
+      	    rwswitch.link.addEventListener("mouseup",function() {
     		
-    		xhr({
-    			url:"/toggleSwitch?id="+lbl,
-    			method:"GET",
-    			responseType:"json"
-    		}).then(switchHandler);
-     	},false);
-    	
+    		    xhr({
+    			    url:"/toggleSwitch?id="+lbl,
+    			    method:"GET",
+    			    responseType:"json"
+    		    }).then(switchHandler);
+     	    },false);
+    	}
+
     	rwswitch.showState();
     	return rwswitch;
     } 
