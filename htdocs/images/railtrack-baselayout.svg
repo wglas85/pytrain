@@ -56,9 +56,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.0636081"
-     inkscape:cx="164.47491"
-     inkscape:cy="154.52626"
+     inkscape:zoom="1.1504758"
+     inkscape:cx="237.47849"
+     inkscape:cy="176.25974"
      inkscape:document-units="px"
      inkscape:current-layer="svg2"
      showgrid="true"
@@ -68,9 +68,9 @@
      inkscape:snap-midpoints="false"
      inkscape:snap-grids="false"
      inkscape:window-width="1280"
-     inkscape:window-height="724"
+     inkscape:window-height="721"
      inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:snap-nodes="true"
@@ -103,6 +103,32 @@
   </metadata>
   <g
      inkscape:groupmode="layer"
+     id="layer_switch_11_1"
+     inkscape:label="switch_11_1"
+     sodipodi:insensitive="true"
+     style="display:inline">
+    <path
+       inkscape:connector-curvature="0"
+       id="path3858"
+       d="m 505,1027.3622 -250,0 c -17.45378,8e-4 -25.58046,4e-4 -36.93454,-4.1827"
+       style="fill:none;stroke:#ff0000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       transform="translate(0,-602.36218)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer_switch_11_0"
+     inkscape:label="switch_11_0"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       transform="translate(0,-602.36218)"
+       style="fill:none;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 505,1027.3622 -250,0 c -17.45378,8e-4 -25.58046,4e-4 -36.93454,-4.1827"
+       id="path3079"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer_switch_10_1"
      inkscape:label="switch_10_1"
      sodipodi:insensitive="true"
@@ -120,7 +146,8 @@
      inkscape:groupmode="layer"
      id="layer_switch_10_0"
      inkscape:label="switch_10_0"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <path
        transform="translate(0,-602.36218)"
        sodipodi:nodetypes="cccc"

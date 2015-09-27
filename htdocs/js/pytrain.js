@@ -1,7 +1,7 @@
 var pytrain = function() {
 
 	// number of railroad switches
-	var NSWITCHES = 10;
+	var NSWITCHES = 11;
 	
     var svg = document.getElementById("railtrack_baselayout");
 	

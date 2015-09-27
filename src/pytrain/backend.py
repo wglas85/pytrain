@@ -22,16 +22,17 @@ class Backend(object):
         '''
         Constructor
         '''
-        self.switchState = [ 0,0,0,0,0,0,0,0,0,0 ]
-        self.coupling = [[1,9],[0,9],[3],[2],[5],[4],None,[8],[7],[0,1] ]
+        self.switchState = [ 0,0,0,0,0,0,0,0,0,0,1 ]
+        self.coupling = [[1,9],[0,9],[3],[2],[5],[4],[-11],[8],[7],[0,1],[-7] ]
         # GPIO PIN numbers of the switches
         # first is the 8-port breakout board, second the 4-port breakout board
         GPIO.setmode(GPIO.BOARD)
         self.gpioMap = [ 3,5,7,11,13,15,19,21,  10,12,16,18 ]
-        for pinid in self.gpioMap:
+        for i in range(0,len(self.switchState)):
+            pinid = self.gpioMap[i]
             log.info("Initializing PIN {}".format(pinid))
             GPIO.setup(pinid,GPIO.OUT)
-            GPIO.output(pinid,0);
+            GPIO.output(pinid,self.switchState[i]);
         
     def toggleSwitchInternal(self,i):
         pinid = self.gpioMap[i]
@@ -44,6 +45,10 @@ class Backend(object):
         cpl = self.coupling[i]
         if cpl != None:
             for j in cpl:
-                if self.switchState[i] != self.switchState[j]:
-                    self.toggleSwitchInternal(j)
+                if j < 0:
+                   if self.switchState[i] != 1-self.switchState[-1-j]:
+                        self.toggleSwitchInternal(-1-j)
+                else:
+                    if self.switchState[i] != self.switchState[j]:
+                        self.toggleSwitchInternal(j)
 
