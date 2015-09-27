@@ -14,5 +14,5 @@ if sys.argv[1]!="10.0.0.6":
     Thread_one = threading.Thread(target=lambda:(os.system(MYDIR+"/run.sh")))
     Thread_one.start()
 
-Thread_two = threading.Thread(target=lambda:(os.system("chromium http://%s:8000/index.html"%(sys.argv[1]))))
+Thread_two = threading.Thread(target=lambda:(os.system("chromium http://%s:8011/index.html"%(sys.argv[1]))))
 Thread_two.start()

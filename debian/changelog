@@ -1,3 +1,10 @@
+pytrain (0.2.1-1) all; urgency=medium
+
+  * Integrate switch 11 for even more power control
+  * Change HTTP port from 8000 to 8011
+
+ -- Wolfgang Glas <wolfgang.glas@iteg.at>  Sun, 27 Sep 2015 12:07:49 +0200
+
 pytrain (0.2.0-1) all; urgency=medium
 
   * Integrate switch 10 for power control

@@ -72,4 +72,4 @@ if __name__ == '__main__':
     root_logger.debug("sys.path=[{}]".format(sys.path))
     from werkzeug.serving import run_simple
     app = create_app()
-    run_simple('0.0.0.0', 8000, app, use_debugger=True, use_reloader=False, threaded=True)
+    run_simple('0.0.0.0', 8011, app, use_debugger=True, use_reloader=False, threaded=True)
