@@ -1,7 +1,7 @@
 var pytrain = function() {
 
 	// number of railroad switches
-	var NSWITCHES = 11;
+	var NSWITCHES = 12;
 	
     var svg = document.getElementById("railtrack_baselayout");
 	
@@ -81,11 +81,20 @@ var pytrain = function() {
     	return d;
     };
     
+    
+    var fetchInitialState = function() {
+        xhr({
+    	    url:"/toggleSwitch",
+		    method:"GET",
+	        responseType:"json"
+        }).then(switchHandler);
+    };
+	
     var define_switch = function(lbl) {
 	   
     	var rwswitch = {
     			
-    			link:  svgDoc.getElementById(lbl+"_link"),
+    			link:  svgDoc.getElementById(lbl+"_link") || document.getElementById(lbl+"_link"),
     			node_0:  svgDoc.getElementById(lbl+"_0"),
     			node_1:  svgDoc.getElementById(lbl+"_1"),
 
@@ -129,9 +138,7 @@ var pytrain = function() {
     
 
     // fetch initial state on startup
-    xhr({
-		url:"/toggleSwitch",
-		method:"GET",
-		responseType:"json"
-	}).then(switchHandler);
+	fetchInitialState();
+	
+	setInterval(fetchInitialState,1000)
 };

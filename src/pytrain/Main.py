@@ -5,7 +5,9 @@ import json
 from pytrain.backend import Backend
 import sys
 import logging
-import logging.handlers
+#import logging.handlers
+import signal
+import select
 
 class PyTrainRequestHandler(object):
 
@@ -70,6 +72,24 @@ if __name__ == '__main__':
     root_logger.setLevel(logging.DEBUG)
 
     root_logger.debug("sys.path=[{}]".format(sys.path))
-    from werkzeug.serving import run_simple
+    # from werkzeug.serving import run_simple
+    from werkzeug.serving import make_server
     app = create_app()
-    run_simple('0.0.0.0', 8011, app, use_debugger=True, use_reloader=False, threaded=True)
+    
+    server = make_server('0.0.0.0',8011,app,threaded=True)
+    
+    def signal_handler(sig,frame):
+        root_logger.info("Shutting down server upon signal %d."%sig)
+        app.backend.reset()
+        os.close(server.fileno())
+        
+    signal.signal(signal.SIGINT,signal_handler)
+    signal.signal(signal.SIGHUP,signal_handler)
+    signal.signal(signal.SIGTERM,signal_handler)
+    signal.signal(signal.SIGABRT,signal_handler)
+    signal.signal(signal.SIGQUIT,signal_handler)
+    
+    try:
+        server.serve_forever()
+    except select.error:
+        exit()
