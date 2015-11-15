@@ -1,3 +1,9 @@
+pytrain (0.3.0-1) all; urgency=medium
+
+  * Integrate switch 12 introduce status polling.
+
+ -- Wolfgang Glas <wolfgang.glas@iteg.at>  Sun, 15 Nov 2015 12:32:43 +0100
+
 pytrain (0.2.1-1) all; urgency=medium
 
   * Integrate switch 11 for even more power control
