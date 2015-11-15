@@ -5,14 +5,16 @@
 }
 #layer_switch_12_link{
     margin-top: 10px;
-    background: red;
+    background: #ff0000;
     width: 100px;
     height: 100px;
+	line-height:100px;
+	vertical-align: middle;
     text-align: center;
     font-size: 13px;
 }
 #layer_switch_12_link:active{
-    background: green;
+    background: #00ff00;
 }
 .noselect{
     -webkit-user-select: none;

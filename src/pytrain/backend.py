@@ -42,6 +42,9 @@ class Backend(object):
                 log.info("Resetting PIN {}".format(pinid))
                 GPIO.output(pinid,0);
         
+    def setSwitch(self,i,switchState):
+        if self.switchState[i] != switchState:
+            self.toggleSwitch(i)
         
     def toggleSwitchInternal(self,i):
         pinid = self.gpioMap[i]
@@ -65,7 +68,7 @@ class Backend(object):
                 if self.switchState[11]==0:
                     log.info("Resetting special purpose switch [11]")
                     self.toggleSwitchInternal(11)
-            timer = Timer(3.0,timerfunc)
+            timer = Timer(10.0,timerfunc)
             timer.start()
             
 

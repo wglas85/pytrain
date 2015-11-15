@@ -19,12 +19,18 @@ class PyTrainRequestHandler(object):
         
         if request.path == '/':
             return Response("Found",status=302,headers=Headers({"Location": "/index.html"}))                   
-        elif request.path == '/toggleSwitch':
+        elif request.path == '/toggleSwitch' or request.path == '/releaseSwitch' or request.path == '/pressSwitch':
+            
             if request.values.has_key('id'):
                 swid = request.values['id']
                 if swid and swid.startswith('layer_switch_'):
                     i = int(swid[13:])-1
-                    self.backend.toggleSwitch(i)
+                    if  request.path == '/releaseSwitch':
+                        self.backend.setSwitch(i,1)
+                    elif request.path == '/pressSwitch':
+                        self.backend.setSwitch(i,0)
+                    else:
+                        self.backend.toggleSwitch(i)
                 
             je = json.encoder.JSONEncoder()
             body = je.encode(self.backend.switchState)

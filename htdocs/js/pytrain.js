@@ -93,7 +93,7 @@ var pytrain = function() {
     var define_switch = function(lbl) {
 	   
     	var rwswitch = {
-    			
+
     			link:  svgDoc.getElementById(lbl+"_link") || document.getElementById(lbl+"_link"),
     			node_0:  svgDoc.getElementById(lbl+"_0"),
     			node_1:  svgDoc.getElementById(lbl+"_1"),
@@ -115,14 +115,44 @@ var pytrain = function() {
     	};
     	
         if (rwswitch.link) {
-      	    rwswitch.link.addEventListener("mouseup",function() {
-    		
-    		    xhr({
-    			    url:"/toggleSwitch?id="+lbl,
-    			    method:"GET",
-    			    responseType:"json"
-    		    }).then(switchHandler);
-     	    },false);
+
+			var special = !svgDoc.getElementById(lbl+"_link"); 
+
+			if (special) {
+      			rwswitch.link.addEventListener("mousedown",function() {
+
+    				xhr({
+    					url:"/pressSwitch?id="+lbl,
+    					method:"GET",
+    					responseType:"json"
+    				}).then(switchHandler);
+					
+					var releaseHandler = function() {
+    					xhr({
+    						url:"/releaseSwitch?id="+lbl,
+    						method:"GET",
+    						responseType:"json"
+    					}).then(switchHandler);
+						document.body.removeEventListener("mouseup",releaseHandler);
+						document.body.removeEventListener("blur",releaseHandler);
+					};
+					
+					document.body.addEventListener("mouseup",releaseHandler,false);
+					document.body.addEventListener("blur",releaseHandler,false);
+					
+				},false);				
+			}
+			else {
+
+      			rwswitch.link.addEventListener("mouseup",function() {
+					
+    				xhr({
+    					url:"/toggleSwitch?id="+lbl,
+    					method:"GET",
+    					responseType:"json"
+    				}).then(switchHandler);
+				},false);
+			}
     	}
 
     	rwswitch.showState();
