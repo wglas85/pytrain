@@ -5,7 +5,7 @@ import json
 from pytrain.backend import Backend
 import sys
 import logging
-#import logging.handlers
+import logging.handlers
 import signal
 import select
 
